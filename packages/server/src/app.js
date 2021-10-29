@@ -3,11 +3,15 @@ const cors = require('cors');
 
 const app = express();
 
+const routes = require('./routes');
+
 app.use(express.json());
 app.use(cors());
 
+app.use(routes);
+
 app.get('/', (_req, res) => {
-  res.send('Tudo ok');
+  res.send();
 });
 
 module.exports = app;
