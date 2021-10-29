@@ -9,5 +9,11 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@finder-up-challenge/eslint-config": "*"
   }
 }

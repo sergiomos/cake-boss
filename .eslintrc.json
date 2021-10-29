@@ -1,0 +1,3 @@
+{
+	"extends": ["@finder-up-challenge/eslint-config"]
+}
