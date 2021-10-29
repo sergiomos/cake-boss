@@ -1,0 +1,13 @@
+{
+  "name": "finder-up-challenge",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Sergio Martins <sergiomos2010@gmail.com>",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  }
+}
