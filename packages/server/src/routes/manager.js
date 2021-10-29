@@ -2,8 +2,8 @@ const express = require('express');
 
 const routes = express.Router();
 
-routes.post('/', (_req, res) => {
-  res.status(201).json({ ok: 'ok' });
-});
+const Manager = require('../controllers/Manager.controller');
+
+routes.post('/', Manager.create);
 
 module.exports = routes;
