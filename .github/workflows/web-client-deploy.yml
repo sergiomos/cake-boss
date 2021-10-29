@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'packages/server/**'
+      - 'packages/web/**'
 
 jobs:
   build:
