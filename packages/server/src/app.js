@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (_req, res) => {
-  res.send('hello world!');
+  res.send('Workflow funcionando');
 });
 
 module.exports = app;
