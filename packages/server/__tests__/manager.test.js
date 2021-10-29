@@ -18,9 +18,15 @@ describe('POST /manager', () => {
         .send(newManager);
 
       expect(response.statusCode).toBe(201);
+
       expect(response.body).toHaveProperty('_id');
+
       expect(response.body).toHaveProperty('name');
-      expect(response.body).toHaveProperty('email');
+      expect(response.body.name).toBe(newManager.name);
+
+      expect(response.body.email).toHaveProperty('email');
+      expect(response.body).toBe(newManager.email);
+
       expect(response.body).not.toHaveProperty('password');
     });
   });
