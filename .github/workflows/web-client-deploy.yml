@@ -1,4 +1,4 @@
-name: Build & Deploy API
+name: Build & Deploy Web Client
 
 on:
   push:
@@ -15,7 +15,8 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "cake-boss-api"
+          heroku_app_name: "cake-boss-web-client"
           heroku_email: "sergiomos2010@gmail.com"
         env:
-          HD_APP_BASE: "package/server"
+          HD_APP_BASE: "package/web"
+          HD_REACT_APP_API_URL: "https://cake-boss-api.herokuapp.com/"
