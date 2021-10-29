@@ -18,5 +18,5 @@ jobs:
           heroku_app_name: "cake-boss-web-client"
           heroku_email: "sergiomos2010@gmail.com"
         env:
-          HD_APP_BASE: "package/web"
+          HD_APP_BASE: "packages/web"
           HD_REACT_APP_API_URL: "https://cake-boss-api.herokuapp.com/"
