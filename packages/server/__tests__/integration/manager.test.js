@@ -2,6 +2,7 @@ const request = require('supertest');
 
 const app = require('../../src/app');
 const conn = require('../../src/database/connection');
+const UserModel = require('../../src/models/Users.model');
 
 const API_ROUTE = '/manager';
 const COLLECTION_NAME = 'managers';
@@ -158,6 +159,27 @@ describe('POST /manager', () => {
           expect(response.body).toStrictEqual({
             err: {
               message: "email can't be empty",
+            },
+          });
+        });
+
+        it('email must be unique', async () => {
+          const manager = {
+            name: 'fulano',
+            password: 'senha123',
+            email: 'fulano@email.com',
+          };
+
+          await UserModel.create(manager);
+
+          const response = await request(app)
+            .post(API_ROUTE)
+            .send(manager);
+
+          expect(response.statusCode).toBe(403);
+          expect(response.body).toStrictEqual({
+            err: {
+              message: 'user already exists',
             },
           });
         });
