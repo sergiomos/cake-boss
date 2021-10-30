@@ -11,6 +11,10 @@ exports.create = async (manager) => {
     return { status: 400, err: { message } };
   }
 
+  const alreadyExists = await Users.findByEmail(manager.email);
+
+  if (alreadyExists) return { status: 403, err: { message: 'user already exists' } };
+
   const createdManager = await Users.create({
     ...manager,
     role: 'manager',

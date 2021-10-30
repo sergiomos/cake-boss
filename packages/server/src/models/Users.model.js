@@ -4,14 +4,22 @@ const COLLECTION_NAME = 'users';
 
 exports.create = async (user) => {
   const db = await conn();
-  const managerCollection = await db.collection(COLLECTION_NAME);
+  const userCollection = await db.collection(COLLECTION_NAME);
   const { password, ...userRest } = user;
-  const { insertedId } = await managerCollection.insertOne(user);
+  const { insertedId } = await userCollection.insertOne(user);
 
-  const createdManager = {
+  const createdUser = {
     ...userRest,
     _id: insertedId,
   };
 
-  return createdManager;
+  return createdUser;
+};
+
+exports.findByEmail = async (userEmail) => {
+  const db = await conn();
+  const userCollection = await db.collection(COLLECTION_NAME);
+  const foundUser = await userCollection.findOne({ email: userEmail });
+
+  return foundUser;
 };
