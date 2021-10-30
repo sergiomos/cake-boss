@@ -5,7 +5,7 @@ const conn = require('../../src/database/connection');
 const UserModel = require('../../src/models/Users.model');
 
 const API_ROUTE = '/manager';
-const COLLECTION_NAME = 'managers';
+const COLLECTION_NAME = 'users';
 
 describe('POST /manager', () => {
   afterEach(async () => {

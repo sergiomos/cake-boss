@@ -19,7 +19,7 @@ exports.create = async (user) => {
 exports.findByEmail = async (userEmail) => {
   const db = await conn();
   const userCollection = await db.collection(COLLECTION_NAME);
-  const foundUser = userCollection.findOne({ email: userEmail });
+  const foundUser = await userCollection.findOne({ email: userEmail });
 
   return foundUser;
 };
