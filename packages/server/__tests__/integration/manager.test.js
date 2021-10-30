@@ -36,6 +36,9 @@ describe('POST /manager', () => {
       expect(response.body).toHaveProperty('email');
       expect(response.body.email).toBe(newManager.email);
 
+      expect(response.body).toHaveProperty('role');
+      expect(response.body.role).toBe('manager');
+
       expect(response.body).not.toHaveProperty('password');
     });
   });
@@ -45,7 +48,7 @@ describe('POST /manager', () => {
       describe('invalid name', () => {
         it('name can not be empty', async () => {
           const response = await request(app)
-            .post()
+            .post(API_ROUTE)
             .send({
               email: 'fulano@email.com',
               password: '1234567',
@@ -61,7 +64,7 @@ describe('POST /manager', () => {
 
         it('name must be larger or equal than 3', async () => {
           const response = await request(app)
-            .post()
+            .post(API_ROUTE)
             .send({
               name: 'a',
               email: 'fulano@email.com',
@@ -96,7 +99,7 @@ describe('POST /manager', () => {
 
         it('password must be larger or equal than 6', async () => {
           const response = await request(app)
-            .post()
+            .post(API_ROUTE)
             .send({
               name: 'fulano',
               email: 'fulano@email.com',
@@ -125,7 +128,7 @@ describe('POST /manager', () => {
 
           const expects = invalidEmail.map(async (email) => {
             const response = await request(app)
-              .post()
+              .post(API_ROUTE)
               .send({
                 name: 'fulano',
                 email,
