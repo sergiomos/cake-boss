@@ -1,10 +1,18 @@
+const validate = require('validate.js');
 const Users = require('../models/Users.model');
 
-exports.create = async ({ email, name, password }) => {
+const constraints = require('../validation/createManager');
+
+exports.create = async (manager) => {
+  const error = validate(manager, constraints);
+
+  if (error) {
+    const [[message]] = Object.values(error);
+    return { status: 400, err: { message } };
+  }
+
   const createdManager = await Users.create({
-    email,
-    name,
-    password,
+    ...manager,
     role: 'manager',
   });
 

@@ -17,5 +17,6 @@
   "devDependencies": {
     "@finder-up-challenge/eslint-config": "*",
     "jest": "26.6.0"
-  }
+  },
+  "dependencies": {}
 }

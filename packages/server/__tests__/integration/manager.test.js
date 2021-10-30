@@ -83,7 +83,7 @@ describe('POST /manager', () => {
       describe('invalid password', () => {
         it('password can not be empty', async () => {
           const response = await request(app)
-            .post()
+            .post(API_ROUTE)
             .send({
               email: 'fulano@email.com',
               name: 'fulano',
@@ -144,6 +144,22 @@ describe('POST /manager', () => {
           });
 
           await Promise.all(expects);
+        });
+
+        it('email can not be empty', async () => {
+          const response = await request(app)
+            .post(API_ROUTE)
+            .send({
+              password: 'senha1223',
+              name: 'fulano',
+            });
+
+          expect(response.statusCode).toBe(400);
+          expect(response.body).toStrictEqual({
+            err: {
+              message: "email can't be empty",
+            },
+          });
         });
       });
     });
