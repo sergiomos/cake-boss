@@ -2,7 +2,7 @@ const request = require('supertest');
 
 const app = require('../../src/app');
 
-const API_ROUTE = '/rawMaterial';
+const API_ROUTE = '/rawMaterials';
 
 const conn = require('../../src/database/connection');
 const UserModel = require('../../src/models/Users.model');
@@ -200,6 +200,61 @@ describe('POST /rawMaterials', () => {
             });
           });
         });
+      });
+    });
+  });
+});
+
+describe('GET /rawMaterials?name', () => {
+  let userId = {};
+  const rawMaterials = [
+    {
+      name: 'Farinha de Trigo',
+      quantity: 10,
+      userId,
+    },
+    {
+      name: 'Farinha de Rosca',
+      quantity: 6,
+      userId,
+    },
+    {
+      name: 'Farinha de Arroz',
+      quantity: 15,
+      userId,
+    },
+  ];
+
+  const insertRawMaterials = async () => {
+    const db = await conn();
+    const collection = db.collection('rawMaterials');
+    await collection.insertMany(rawMaterials);
+  };
+
+  beforeEach(async () => {
+    const user = await createUser();
+    userId = user._id;
+    await insertRawMaterials();
+  });
+
+  afterEach(async () => {
+    await cleanup();
+  });
+
+  describe('List all created materials', () => {
+    describe('on success', () => {
+      it('return an array', async () => {
+        const response = await request(app)
+          .get(`${API_ROUTE}?name=farinha`);
+
+        expect(Array.isArray(response)).toBe(true);
+      });
+
+      it('return material that includes name param', async () => {
+        const response = await request(app)
+          .get(`${API_ROUTE}?name=farinha`);
+
+        expect(response).toStrictEqual(rawMaterials);
       });
     });
   });

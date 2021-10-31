@@ -10,6 +10,6 @@ const rawMaterialsRoutes = require('./rawMaterials');
 routes.use('/manager', managerRoutes);
 routes.use('/employees', employeesRoutes);
 routes.use('/login', loginRoutes);
-routes.use('/rawMaterial', rawMaterialsRoutes);
+routes.use('/rawMaterials', rawMaterialsRoutes);
 
 module.exports = routes;
