@@ -1,13 +1,15 @@
+const { ObjectId } = require('mongodb');
 const conn = require('../database/connection');
 
 const COLLECTION_NAME = 'rawMaterials';
 
-exports.create = async (rawMaterialData) => {
+exports.create = async ({ userId, ...rawMaterialData }) => {
   const db = await conn();
   const rawMaterialCollection = await db.collection(COLLECTION_NAME);
-  const { insertedId } = rawMaterialCollection.insertOne(rawMaterialData);
+  const { insertedId } = await rawMaterialCollection
+    .insertOne({ ...rawMaterialData, userId: ObjectId(userId) });
 
-  return { ...rawMaterialData, _id: insertedId };
+  return { ...rawMaterialData, _id: insertedId, userId };
 };
 
 exports.getMaterialsByName = async (rawMaterialName) => {

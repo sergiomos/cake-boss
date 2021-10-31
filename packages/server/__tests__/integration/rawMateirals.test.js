@@ -21,9 +21,20 @@ const cleanup = async () => {
   await db.collection('orders').deleteMany({});
 };
 
+const insertRawMaterials = async (rawMaterial, userId) => {
+  const response = await request(app)
+    .post(API_ROUTE)
+    .send({
+      ...rawMaterial,
+      userId,
+    });
+
+  return response.body;
+};
+
 describe('POST /rawMaterials', () => {
   describe('Insert raw material', () => {
-    let userId = {};
+    let userId = '';
 
     beforeEach(async () => {
       const user = await createUser();
@@ -58,7 +69,7 @@ describe('POST /rawMaterials', () => {
           });
 
         expect(response.statusCode).toBe(201);
-        expect(response.body.userId.toString()).toBe(userId.toString());
+        expect(response.body.userId).toBe(userId.toString());
       });
 
       it('return the quantity', async () => {
@@ -206,48 +217,11 @@ describe('POST /rawMaterials', () => {
 });
 
 describe('GET /rawMaterials?name', () => {
-  let newUserId;
-  let newUserName;
-  let rawMaterials;
-
-  const insertRawMaterials = async () => {
-    rawMaterials = [
-      {
-        name: 'Farinha de Trigo',
-        quantity: 10,
-        userId: newUserId,
-      },
-      {
-        name: 'Farinha de Rosca',
-        quantity: 6,
-        userId: newUserId,
-      },
-      {
-        name: 'Farinha de Arroz',
-        quantity: 15,
-        userId: newUserId,
-      },
-    ];
-    const db = await conn();
-    const collection = db.collection('rawMaterials');
-    await collection.insertMany(rawMaterials);
-  };
-
-  const getUserData = async () => {
-    const user = await createUser();
-    newUserId = user._id;
-    newUserName = user.name;
-  };
-
-  const getRawMaterialExpectResponse = ({ userId, _id, ...data }) => ({
-    ...data,
-    user: newUserName,
-    _id: _id.toString(),
-  });
+  let rawMaterial;
 
   beforeEach(async () => {
-    await getUserData();
-    await insertRawMaterials();
+    const user = await createUser();
+    rawMaterial = await insertRawMaterials({ name: 'Farinha de trigo', quantity: 6 }, user._id);
   });
 
   afterEach(async () => {
@@ -267,7 +241,12 @@ describe('GET /rawMaterials?name', () => {
         const response = await request(app)
           .get(`${API_ROUTE}?name=farinha`);
 
-        expect(response.body).toStrictEqual(rawMaterials.map(getRawMaterialExpectResponse));
+        expect(response.body).toStrictEqual([{
+          _id: rawMaterial._id,
+          name: 'Farinha de trigo',
+          quantity: 6,
+          user: 'fulano',
+        }]);
       });
     });
 
@@ -282,6 +261,26 @@ describe('GET /rawMaterials?name', () => {
             message: 'raw material not found',
           },
         });
+      });
+    });
+  });
+});
+
+describe.skip('PUT /rawMaterials/:id/request', () => {
+  let rawMaterial;
+
+  beforeEach(async () => {
+
+  });
+
+  afterEach(async () => {
+    await cleanup();
+  });
+
+  describe('Register a raw material request order', () => {
+    describe('on success', () => {
+      it('should return the created order', async () => {
+
       });
     });
   });
