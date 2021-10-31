@@ -266,11 +266,18 @@ describe('GET /rawMaterials?name', () => {
   });
 });
 
-describe.skip('PUT /rawMaterials/:id/request', () => {
-  let rawMaterial;
+describe('PUT /rawMaterials/:id/request', () => {
+  let rawMaterialId;
+  let userId;
+  let userName;
 
   beforeEach(async () => {
+    const user = await createUser();
+    const rawMaterial = await insertRawMaterials({ name: 'Farinha de trigo', quantity: 6 }, user._id);
 
+    userId = user._id;
+    userName = user.name;
+    rawMaterialId = rawMaterial._id;
   });
 
   afterEach(async () => {
@@ -280,7 +287,20 @@ describe.skip('PUT /rawMaterials/:id/request', () => {
   describe('Register a raw material request order', () => {
     describe('on success', () => {
       it('should return the created order', async () => {
+        const response = await request(app)
+          .put(`${API_ROUTE}/${rawMaterialId}/request`)
+          .send({
+            userId,
+            quantity: 2,
+          });
 
+        expect(response.statusCode).toBe(200);
+
+        expect(response.body).toHaveProperty('quantity');
+        expect(response.body.quantity).toBe(2);
+
+        expect(response.body).toHaveProperty('user');
+        expect(response.body.quantity).toBe(userName);
       });
     });
   });
