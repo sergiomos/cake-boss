@@ -1,5 +1,3 @@
-const RawMaterials = require('../services/RawMaterials.service');
-
 exports.create = async (req, res) => {
   const { createdRawMaterial } = req;
 
@@ -7,9 +5,7 @@ exports.create = async (req, res) => {
 };
 
 exports.getMaterialsByName = async (req, res) => {
-  const { name: rawMaterialName } = req.query;
-
-  const foundMaterials = await RawMaterials.getMaterialsByName(rawMaterialName);
+  const { foundMaterials } = req;
 
   res.status(200).json(foundMaterials);
 };

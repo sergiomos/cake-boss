@@ -7,6 +7,7 @@ const RawMaterialsMiddle = require('../middlewares/RawMaterials.middleware');
 
 routes.route('/')
   .get(
+    RawMaterialsMiddle.getByNameValidation,
     RawMaterials.getMaterialsByName,
   )
   .post(

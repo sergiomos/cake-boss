@@ -23,5 +23,7 @@ exports.create = async (rawMaterialData) => {
 exports.getMaterialsByName = async (rawMaterialName) => {
   const foundMaterials = await RawMaterial.getMaterialsByName(rawMaterialName);
 
+  if (!foundMaterials.length) return { status: 404, err: { message: 'raw material not found' } };
+
   return foundMaterials;
 };
