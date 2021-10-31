@@ -32,3 +32,11 @@ exports.findByManagerId = async (managerId) => {
 
   return foundUser;
 };
+
+exports.singIn = async (userCredentials) => {
+  const db = await conn();
+  const userCollection = await db.collection(COLLECTION_NAME);
+  const foundUser = await userCollection.findOne(userCredentials);
+
+  return foundUser;
+};

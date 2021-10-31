@@ -43,7 +43,7 @@ describe('POST /login', () => {
           });
 
         expect(response.statusCode).toBe(200);
-        expect(response.body._id).toBe(user._id);
+        expect(response.body._id).toBe(user._id.toString());
       });
 
       it('return user role', async () => {
