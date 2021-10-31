@@ -16,7 +16,7 @@ const createUser = async () => UserModel.create({
 
 const cleanup = async () => {
   const db = await conn();
-  const collection = db.collection(COLLECTION_NAME);
+  const collection = await db.collection(COLLECTION_NAME);
 
   await collection.deleteMany({});
 };
