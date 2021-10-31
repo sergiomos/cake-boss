@@ -24,7 +24,7 @@ const cleanup = async () => {
 describe('POST /rawMaterials', () => {
   describe('Insert raw material', () => {
     let user;
-    const { _id: userId } = user;
+    const { _id: userId } = user || {};
 
     beforeEach(async () => {
       user = await createUser();
@@ -44,7 +44,7 @@ describe('POST /rawMaterials', () => {
             userId,
           });
 
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toBe(201);
         expect(response.body.name).toBe('Farinha de Trigo');
       });
 
@@ -57,7 +57,7 @@ describe('POST /rawMaterials', () => {
             userId,
           });
 
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toBe(201);
         expect(response.body.userId).toStrictEqual(userId);
       });
 
@@ -70,7 +70,7 @@ describe('POST /rawMaterials', () => {
             userId,
           });
 
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toBe(201);
         expect(response.body.quantity).toBe(10);
       });
     });
