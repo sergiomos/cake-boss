@@ -38,3 +38,16 @@ exports.getMaterialsByName = async (rawMaterialName) => {
 
   return foundMaterials;
 };
+
+exports.requestRawMaterialFromStock = async ({ rawMaterialId, quantity }) => {
+  const db = await conn();
+  const rawMaterialCollection = await db.collection(COLLECTION_NAME);
+  await rawMaterialCollection.updateOne(
+    { _id: ObjectId(rawMaterialId) },
+    {
+      $set: {
+        $inc: { quantity: quantity * -1 },
+      },
+    },
+  );
+};
