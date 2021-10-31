@@ -208,40 +208,45 @@ describe('POST /rawMaterials', () => {
 describe('GET /rawMaterials?name', () => {
   let newUserId;
   let newUserName;
-  const rawMaterials = [
-    {
-      name: 'Farinha de Trigo',
-      quantity: 10,
-      userId: newUserId,
-    },
-    {
-      name: 'Farinha de Rosca',
-      quantity: 6,
-      userId: newUserId,
-    },
-    {
-      name: 'Farinha de Arroz',
-      quantity: 15,
-      userId: newUserId,
-    },
-  ];
+  let rawMaterials;
 
   const insertRawMaterials = async () => {
+    rawMaterials = [
+      {
+        name: 'Farinha de Trigo',
+        quantity: 10,
+        userId: newUserId,
+      },
+      {
+        name: 'Farinha de Rosca',
+        quantity: 6,
+        userId: newUserId,
+      },
+      {
+        name: 'Farinha de Arroz',
+        quantity: 15,
+        userId: newUserId,
+      },
+    ];
     const db = await conn();
     const collection = db.collection('rawMaterials');
     await collection.insertMany(rawMaterials);
   };
 
-  const getUserDate = async () => {
+  const getUserData = async () => {
     const user = await createUser();
     newUserId = user._id;
     newUserName = user.name;
   };
 
-  const getRawMaterialExpectResponse = ({ userId, ...data }) => ({ ...data, user: newUserName });
+  const getRawMaterialExpectResponse = ({ userId, _id, ...data }) => ({
+    ...data,
+    user: newUserName,
+    _id: _id.toString(),
+  });
 
   beforeEach(async () => {
-    await getUserDate();
+    await getUserData();
     await insertRawMaterials();
   });
 

@@ -1,8 +1,8 @@
 const validate = require('validate.js');
+
 const RawMaterial = require('../models/RawMaterials.model');
 
 const constraints = require('../validation/schemas/createRawMaterial');
-
 const userExists = require('../validation/utils/userExists');
 
 exports.create = async (rawMaterialData) => {
@@ -18,4 +18,10 @@ exports.create = async (rawMaterialData) => {
 
   const createdRawMaterial = await RawMaterial.create(rawMaterialData);
   return createdRawMaterial;
+};
+
+exports.getMaterialsByName = async (rawMaterialName) => {
+  const foundMaterials = await RawMaterial.getMaterialsByName(rawMaterialName);
+
+  return foundMaterials;
 };
