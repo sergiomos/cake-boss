@@ -23,11 +23,11 @@ const cleanup = async () => {
 
 describe('POST /rawMaterials', () => {
   describe('Insert raw material', () => {
-    let user;
-    const { _id: userId } = user || {};
+    let userId = {};
 
     beforeEach(async () => {
-      user = await createUser();
+      const user = await createUser();
+      userId = user._id;
     });
 
     afterEach(async () => {
@@ -58,7 +58,7 @@ describe('POST /rawMaterials', () => {
           });
 
         expect(response.statusCode).toBe(201);
-        expect(response.body.userId).toStrictEqual(userId);
+        expect(response.body.userId.toString()).toBe(userId.toString());
       });
 
       it('return the quantity', async () => {
@@ -134,7 +134,7 @@ describe('POST /rawMaterials', () => {
               const response = await request(app)
                 .post(API_ROUTE)
                 .send({
-                  name: 'Ov',
+                  name: 'Ovo',
                   quantity: -2,
                   userId,
                 });
@@ -170,7 +170,7 @@ describe('POST /rawMaterials', () => {
             const response = await request(app)
               .post(API_ROUTE)
               .send({
-                name: 'Ov',
+                name: 'Farinha',
                 quantity: 5,
                 userId: '516512',
               });
@@ -187,12 +187,12 @@ describe('POST /rawMaterials', () => {
             const response = await request(app)
               .post(API_ROUTE)
               .send({
-                name: 'Ov',
+                name: 'Leite',
                 quantity: 5,
-                userId: '617deb2d3571e4ee657a88b3',
+                userId: '617eb0e8eac282665804d270',
               });
 
-            expect(response.statusCode).toBe(400);
+            expect(response.statusCode).toBe(404);
             expect(response.body).toStrictEqual({
               err: {
                 message: 'user not found',

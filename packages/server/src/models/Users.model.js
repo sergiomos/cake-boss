@@ -25,10 +25,18 @@ exports.findByEmail = async (userEmail) => {
   return foundUser;
 };
 
-exports.findByManagerId = async (managerId) => {
+exports.findUserById = async (userId) => {
   const db = await conn();
   const userCollection = await db.collection(COLLECTION_NAME);
-  const foundUser = await userCollection.findOne({ _id: ObjectId(managerId) });
+  const foundUser = await userCollection.findOne({ _id: ObjectId(userId) });
+
+  return foundUser;
+};
+
+exports.findManagerById = async (managerId) => {
+  const db = await conn();
+  const userCollection = await db.collection(COLLECTION_NAME);
+  const foundUser = await userCollection.findOne({ _id: ObjectId(managerId), role: 'manager' });
 
   return foundUser;
 };

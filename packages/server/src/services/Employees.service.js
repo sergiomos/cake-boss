@@ -3,7 +3,7 @@ const Users = require('../models/Users.model');
 
 const constraints = require('../validation/schemas/createEmployee');
 
-const userAlreadyExists = require('../validation/utils/userAlreadyExists');
+const isEmailUnique = require('../validation/utils/isEmailUnique');
 const managerExistsValidation = require('../validation/utils/managerExists');
 
 exports.create = async (data) => {
@@ -14,7 +14,7 @@ exports.create = async (data) => {
     return { status: 400, err: { message } };
   }
 
-  const userExists = await userAlreadyExists(data.email);
+  const userExists = await isEmailUnique(data.email);
   const managerExists = await managerExistsValidation(data.managerId);
 
   switch (true) {
