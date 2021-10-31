@@ -7,7 +7,7 @@ const UserModel = require('../../src/models/Users.model');
 const API_ROUTE = '/login';
 const COLLECTION_NAME = 'users';
 
-const userLogin = async () => UserModel.create({
+const createUser = async () => UserModel.create({
   name: 'fulano',
   email: 'fulano@email.com',
   password: 'senha1234',
@@ -26,7 +26,7 @@ describe('POST /login', () => {
     let user;
 
     beforeEach(async () => {
-      user = await userLogin();
+      user = await createUser();
     });
 
     afterEach(async () => {
@@ -56,6 +56,24 @@ describe('POST /login', () => {
 
         expect(response.statusCode).toBe(200);
         expect(response.body.role).toBe(user.role);
+      });
+    });
+
+    describe('on fail', () => {
+      it("Shouldn't login with invalid credentials", async () => {
+        const response = await request(app)
+          .post(API_ROUTE)
+          .send({
+            email: 'ciclano@email.com',
+            password: 'senha5678',
+          });
+
+        expect(response.statusCode).toBe(401);
+        expect(response.body).toStrictEqual({
+          err: {
+            message: 'Wrong email or password',
+          },
+        });
       });
     });
   });
