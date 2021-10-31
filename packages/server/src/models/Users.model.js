@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const conn = require('../database/connection');
 
 const COLLECTION_NAME = 'users';
@@ -20,6 +21,14 @@ exports.findByEmail = async (userEmail) => {
   const db = await conn();
   const userCollection = await db.collection(COLLECTION_NAME);
   const foundUser = await userCollection.findOne({ email: userEmail });
+
+  return foundUser;
+};
+
+exports.findByManagerId = async (managerId) => {
+  const db = await conn();
+  const userCollection = await db.collection(COLLECTION_NAME);
+  const foundUser = await userCollection.findOne({ _id: ObjectId(managerId) });
 
   return foundUser;
 };
