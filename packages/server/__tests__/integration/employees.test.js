@@ -7,6 +7,8 @@ const UserModel = require('../../src/models/Users.model');
 const API_ROUTE = '/employees';
 const COLLECTION_NAME = 'users';
 
+let managerId;
+
 const cleanup = async () => {
   const db = await conn();
   const collection = db.collection(COLLECTION_NAME);
@@ -14,8 +16,20 @@ const cleanup = async () => {
   await collection.deleteMany({});
 };
 
+const createManager = async () => {
+  const manager = await UserModel.create({
+    name: 'Gerente',
+    email: 'manager@email.com',
+    password: 'senha123',
+    role: 'manager',
+  });
+
+  managerId = manager._id.toString();
+};
+
 describe('POST /employees', () => {
   describe('create an employee', () => {
+    beforeEach(createManager);
     afterEach(cleanup);
 
     describe('on success', () => {
@@ -24,7 +38,7 @@ describe('POST /employees', () => {
           email: 'employee@email.com',
           name: 'fulano',
           password: 'senha123',
-          managerId: 'numeros',
+          managerId,
           role: 'padeiro',
         };
 
@@ -53,6 +67,9 @@ describe('POST /employees', () => {
     });
 
     describe('on fail', () => {
+      beforeEach(createManager);
+      afterEach(cleanup);
+
       describe('return error message by cases', () => {
         describe("Can't create with invalid", () => {
           describe('name', () => {
@@ -62,7 +79,7 @@ describe('POST /employees', () => {
                 .send({
                   email: 'employee@email.com',
                   password: 'senha123',
-                  managerId: 'numeros',
+                  managerId,
                   role: 'padeiro',
                 });
 
@@ -81,7 +98,7 @@ describe('POST /employees', () => {
                   name: 'em',
                   email: 'employee@email.com',
                   password: 'senha123',
-                  managerId: 'numeros',
+                  managerId,
                   role: 'padeiro',
                 });
 
@@ -101,7 +118,7 @@ describe('POST /employees', () => {
                 .send({
                   email: 'employee@email.com',
                   name: 'fulano',
-                  managerId: 'numeros',
+                  managerId,
                   role: 'padeiro',
                 });
 
@@ -120,7 +137,7 @@ describe('POST /employees', () => {
                   name: 'ciclano',
                   email: 'employee@email.com',
                   password: 'senha',
-                  managerId: 'numeros',
+                  managerId,
                   role: 'padeiro',
                 });
 
@@ -141,7 +158,7 @@ describe('POST /employees', () => {
                   email: 'employee@email.com',
                   name: 'fulano',
                   password: 'senha123',
-                  managerId: 'numeros',
+                  managerId,
                 });
 
               expect(response.statusCode).toBe(400);
@@ -172,6 +189,25 @@ describe('POST /employees', () => {
               });
             });
 
+            it('Is valid', async () => {
+              const response = await request(app)
+                .post(API_ROUTE)
+                .send({
+                  email: 'employee@email.com',
+                  name: 'fulano',
+                  password: 'senha123',
+                  managerId: '1222',
+                  role: 'padeiro',
+                });
+
+              expect(response.statusCode).toBe(400);
+              expect(response.body).toStrictEqual({
+                err: {
+                  message: 'invalid managerId',
+                },
+              });
+            });
+
             it('Should exists', async () => {
               const response = await request(app)
                 .post(API_ROUTE)
@@ -179,14 +215,14 @@ describe('POST /employees', () => {
                   email: 'employee@email.com',
                   name: 'fulano',
                   password: 'senha123',
-                  managerId: '025412',
+                  managerId: '617deb2d3571e4ee657a88b3',
                   role: 'padeiro',
                 });
 
               expect(response.statusCode).toBe(404);
               expect(response.body).toStrictEqual({
                 err: {
-                  message: 'managerId not found',
+                  message: 'manager not found',
                 },
               });
             });
@@ -199,7 +235,7 @@ describe('POST /employees', () => {
                 .send({
                   name: 'fulano',
                   password: 'senha123',
-                  managerId: 'numeros',
+                  managerId,
                   role: 'padeiro',
                 });
 
@@ -227,7 +263,7 @@ describe('POST /employees', () => {
                   .send({
                     name: 'fulano',
                     password: 'senha123',
-                    managerId: 'numeros',
+                    managerId,
                     role: 'padeiro',
                     email,
                   });
@@ -248,7 +284,7 @@ describe('POST /employees', () => {
                 email: 'employee@email.com',
                 name: 'fulano',
                 password: 'senha123',
-                managerId: 'numeros',
+                managerId,
                 role: 'padeiro',
               };
 
