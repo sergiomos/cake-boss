@@ -1,3 +1,4 @@
+const isValidId = require('../utils/isAValidId');
 const createManagerConstraints = require('./createManager');
 
 module.exports = {
@@ -11,6 +12,10 @@ module.exports = {
   managerId: {
     presence: {
       message: "^managerId can't be empty",
+    },
+    type: {
+      type: isValidId,
+      message: '^invalid managerId',
     },
   },
 };

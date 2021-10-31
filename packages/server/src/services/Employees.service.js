@@ -1,8 +1,10 @@
-const { ObjectId } = require('mongodb');
 const validate = require('validate.js');
 const Users = require('../models/Users.model');
 
-const constraints = require('../validation/createEmployee');
+const constraints = require('../validation/schemas/createEmployee');
+
+const userAlreadyExists = require('../validation/utils/userAlreadyExists');
+const managerExistsValidation = require('../validation/utils/managerExists');
 
 exports.create = async (data) => {
   const error = validate(data, constraints);
@@ -12,17 +14,20 @@ exports.create = async (data) => {
     return { status: 400, err: { message } };
   }
 
-  const alreadyExists = await Users.findByEmail(data.email);
+  const userExists = await userAlreadyExists(data.email);
+  const managerExists = await managerExistsValidation(data.managerId);
 
-  if (alreadyExists) return { status: 403, err: { message: 'user already exists' } };
+  switch (true) {
+    case userExists:
+      return { status: 403, err: { message: 'user already exists' } };
 
-  if (!ObjectId.isValid(data.managerId)) return { status: 400, err: { message: 'invalid managerId' } };
+    case !managerExists:
+      return { status: 404, err: { message: 'manager not found' } };
 
-  const managerExists = await Users.findByManagerId(data.managerId);
-
-  if (!managerExists) return { status: 404, err: { message: 'manager not found' } };
-
-  const createdEmployee = Users.create(data);
-
-  return createdEmployee;
+    default:
+    {
+      const createdEmployee = Users.create(data);
+      return createdEmployee;
+    }
+  }
 };

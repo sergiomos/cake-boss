@@ -1,7 +1,7 @@
 const validate = require('validate.js');
 const Users = require('../models/Users.model');
 
-const constraints = require('../validation/createManager');
+const constraints = require('../validation/schemas/createManager');
 
 exports.create = async (manager) => {
   const error = validate(manager, constraints);
