@@ -303,5 +303,78 @@ describe('PUT /rawMaterials/:id/request', () => {
         expect(response.body.quantity).toBe(userName);
       });
     });
+
+    describe('on fail', () => {
+      describe('return error message by case', () => {
+        describe('should not be able to request with invalid entries', () => {
+          describe('rawMaterialId', () => {
+            it('should be valid id', async () => {
+              const response = await request(app)
+                .put(`${API_ROUTE}/${rawMaterialId}/request`)
+                .send({
+                  user: '156465',
+                  quantity: 2,
+                });
+
+              expect(response.statusCode).toBe(400);
+              expect(response.body).toStrictEqual({
+                err: {
+                  message: 'invalid userId',
+                },
+              });
+            });
+            it('should exists', async () => {
+              const response = await request(app)
+                .put(`${API_ROUTE}/${rawMaterialId}/request`)
+                .send({
+                  user: '617eb0e8eac282665804d270',
+                  quantity: 2,
+                });
+
+              expect(response.statusCode).toBe(404);
+              expect(response.body).toStrictEqual({
+                err: {
+                  message: 'user not found',
+                },
+              });
+            });
+          });
+
+          describe('quantity', () => {
+            it('should not be lower than 1', async () => {
+              const response = await request(app)
+                .put(`${API_ROUTE}/${rawMaterialId}/request`)
+                .send({
+                  userId,
+                  quantity: 0,
+                });
+
+              expect(response.statusCode).toBe(400);
+              expect(response.body).toBe({
+                err: {
+                  message: 'quantity must be greater than 0',
+                },
+              });
+            });
+
+            it('should not be greater than material in stock', async () => {
+              const response = await request(app)
+                .put(`${API_ROUTE}/${rawMaterialId}/request`)
+                .send({
+                  userId,
+                  quantity: 10,
+                });
+
+              expect(response.statusCode).toBe(400);
+              expect(response.body).toBe({
+                err: {
+                  message: 'quantity must be equal or lower than quantity in stock',
+                },
+              });
+            });
+          });
+        });
+      });
+    });
   });
 });
