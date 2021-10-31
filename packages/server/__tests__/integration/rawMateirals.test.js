@@ -206,22 +206,23 @@ describe('POST /rawMaterials', () => {
 });
 
 describe('GET /rawMaterials?name', () => {
-  let userId = {};
+  let newUserId;
+  let newUserName;
   const rawMaterials = [
     {
       name: 'Farinha de Trigo',
       quantity: 10,
-      userId,
+      userId: newUserId,
     },
     {
       name: 'Farinha de Rosca',
       quantity: 6,
-      userId,
+      userId: newUserId,
     },
     {
       name: 'Farinha de Arroz',
       quantity: 15,
-      userId,
+      userId: newUserId,
     },
   ];
 
@@ -231,9 +232,16 @@ describe('GET /rawMaterials?name', () => {
     await collection.insertMany(rawMaterials);
   };
 
-  beforeEach(async () => {
+  const getUserDate = async () => {
     const user = await createUser();
-    userId = user._id;
+    newUserId = user._id;
+    newUserName = user.name;
+  };
+
+  const getRawMaterialExpectResponse = ({ userId, ...data }) => ({ ...data, user: newUserName });
+
+  beforeEach(async () => {
+    await getUserDate();
     await insertRawMaterials();
   });
 
@@ -247,14 +255,28 @@ describe('GET /rawMaterials?name', () => {
         const response = await request(app)
           .get(`${API_ROUTE}?name=farinha`);
 
-        expect(Array.isArray(response)).toBe(true);
+        expect(Array.isArray(response.body)).toBe(true);
       });
 
       it('return material that includes name param', async () => {
         const response = await request(app)
           .get(`${API_ROUTE}?name=farinha`);
 
-        expect(response).toStrictEqual(rawMaterials);
+        expect(response.body).toStrictEqual(rawMaterials.map(getRawMaterialExpectResponse));
+      });
+    });
+
+    describe('on fail', () => {
+      it('return material not found', async () => {
+        const response = await request(app)
+          .get(`${API_ROUTE}?name=leite`);
+
+        expect(response.statusCode).toBe(404);
+        expect(response.body).toStrictEqual({
+          err: {
+            message: 'raw material not found',
+          },
+        });
       });
     });
   });
