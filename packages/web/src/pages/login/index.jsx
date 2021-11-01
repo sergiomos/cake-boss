@@ -7,12 +7,14 @@ import { Container, Box, StatusMessage } from './style';
 
 const Login = () => {
   const { singIn, loginStatus, setLoginStatus } = useUserContext();
-  const [loginStatusMessage, setLoginStatusMessage] = useState('Ola eu sou uma mensagem');
+  const [loginStatusMessage, setLoginStatusMessage] = useState('');
 
   const handleUserLogin = async (userEmail, userPassword) => {
     setLoginStatus('loading');
     await singIn(userEmail, userPassword);
+  };
 
+  useEffect(() => {
     switch (loginStatus) {
       case 401:
         setLoginStatusMessage('Email ou senha inválidos, verifique as informações e tente novamente');
@@ -22,10 +24,10 @@ const Login = () => {
         break;
       default:
     }
-  };
+  }, [loginStatus]);
 
   useEffect(() => {
-    const time = 500055550;
+    const time = 5000;
     setTimeout(() => {
       setLoginStatusMessage('');
     }, time);

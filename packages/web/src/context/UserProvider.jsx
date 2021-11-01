@@ -9,7 +9,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3333
 const UserProvider = ({ children }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loginStatus, setLoginStatus] = useState(200);
+  const [loginStatus, setLoginStatus] = useState('');
 
   const [user, setUser] = useState({
     _id: '',

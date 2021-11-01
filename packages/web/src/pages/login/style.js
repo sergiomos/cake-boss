@@ -12,6 +12,10 @@ export const Box = styled.div`
   width: 100%;
   margin: auto;
   align-self: center;
+
+  @media(min-width: 350px) {
+    width: 350px;
+  }
 `;
 
 export const StatusMessage = styled.strong`
