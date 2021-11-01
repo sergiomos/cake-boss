@@ -300,7 +300,7 @@ describe('PUT /rawMaterials/:id/request', () => {
         expect(response.body.quantity).toBe(2);
 
         expect(response.body).toHaveProperty('user');
-        expect(response.body.quantity).toBe(userName);
+        expect(response.body.user).toBe(userName);
       });
     });
 
@@ -310,31 +310,31 @@ describe('PUT /rawMaterials/:id/request', () => {
           describe('rawMaterialId', () => {
             it('should be valid id', async () => {
               const response = await request(app)
-                .put(`${API_ROUTE}/${rawMaterialId}/request`)
+                .put(`${API_ROUTE}/54454/request`)
                 .send({
-                  user: '156465',
+                  userId,
                   quantity: 2,
                 });
 
               expect(response.statusCode).toBe(400);
               expect(response.body).toStrictEqual({
                 err: {
-                  message: 'invalid userId',
+                  message: 'invalid rawMaterialId',
                 },
               });
             });
             it('should exists', async () => {
               const response = await request(app)
-                .put(`${API_ROUTE}/${rawMaterialId}/request`)
+                .put(`${API_ROUTE}/617eb0e8eac282665804d270/request`)
                 .send({
-                  user: '617eb0e8eac282665804d270',
+                  userId,
                   quantity: 2,
                 });
 
               expect(response.statusCode).toBe(404);
               expect(response.body).toStrictEqual({
                 err: {
-                  message: 'user not found',
+                  message: 'raw material not found',
                 },
               });
             });
@@ -350,7 +350,7 @@ describe('PUT /rawMaterials/:id/request', () => {
                 });
 
               expect(response.statusCode).toBe(400);
-              expect(response.body).toBe({
+              expect(response.body).toStrictEqual({
                 err: {
                   message: 'quantity must be greater than 0',
                 },
@@ -366,7 +366,7 @@ describe('PUT /rawMaterials/:id/request', () => {
                 });
 
               expect(response.statusCode).toBe(400);
-              expect(response.body).toBe({
+              expect(response.body).toStrictEqual({
                 err: {
                   message: 'quantity must be equal or lower than quantity in stock',
                 },
