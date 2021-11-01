@@ -4,8 +4,8 @@ export const Container = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-self: center;
-
 `;
 
 export const Box = styled.div`
@@ -32,4 +32,14 @@ export const StatusMessage = styled.strong`
   text-align: center;
   display: ${({ loginStatus }) => (loginStatus === 'loading' || !loginStatus ? 'none' : 'block')};
 
+`;
+
+export const RegisterMessage = styled.p`
+  font-size: 1.4rem;
+`;
+
+export const RegisterMessageLink = styled.a`
+  color: #1BA29D;
+  font-weight: 500;
+  text-decoration: none;
 `;

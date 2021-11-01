@@ -3,7 +3,13 @@ import React, { useEffect, useState } from 'react';
 import useUserContext from '../../hooks/useUserContext';
 import LoginForm from '../../components/LoginForm';
 
-import { Container, Box, StatusMessage } from './style';
+import {
+  Container,
+  Box,
+  StatusMessage,
+  RegisterMessage,
+  RegisterMessageLink,
+} from './style';
 
 const Login = () => {
   const { singIn, loginStatus, setLoginStatus } = useUserContext();
@@ -45,6 +51,12 @@ const Login = () => {
           handleUserLogin={handleUserLogin}
         />
       </Box>
+
+      <RegisterMessage>
+        Ainda não é cadastrado?
+        {' '}
+        <RegisterMessageLink href="/singUp">Cadastre-se aqui</RegisterMessageLink>
+      </RegisterMessage>
     </Container>
   );
 };
