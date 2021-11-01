@@ -37,3 +37,8 @@ exports.create = async ({ rawMaterialId, userId, quantity }) => {
     }
   }
 };
+
+exports.getRawMaterialRequestsByUsers = async (userName) => {
+  const foundOrdersData = await Orders.getRawMaterialRequestsByUsers(userName);
+  return foundOrdersData;
+};

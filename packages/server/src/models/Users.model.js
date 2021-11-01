@@ -25,6 +25,21 @@ exports.findByEmail = async (userEmail) => {
   return foundUser;
 };
 
+const findUsersByName = async (userName) => {
+  const db = await conn();
+  const userCollection = await db.collection(COLLECTION_NAME);
+  const foundUsers = await userCollection.find({ name: userName }).toArray();
+
+  return foundUsers;
+};
+
+exports.getUsersIdByName = async (userName) => {
+  const users = await findUsersByName(userName);
+  const usersIds = users.map(({ _id }) => _id);
+
+  return usersIds;
+};
+
 exports.findUserById = async (userId) => {
   const db = await conn();
   const userCollection = await db.collection(COLLECTION_NAME);

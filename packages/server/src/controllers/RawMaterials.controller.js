@@ -4,8 +4,8 @@ exports.create = async (req, res) => {
   res.status(201).json(createdRawMaterial);
 };
 
-exports.getMaterialsByName = async (req, res) => {
-  const { foundMaterials } = req;
+exports.getMaterialsController = async (req, res) => {
+  const { foundData } = req;
 
-  res.status(200).json(foundMaterials);
+  res.status(200).json(foundData);
 };

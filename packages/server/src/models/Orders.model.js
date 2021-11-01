@@ -15,7 +15,7 @@ exports.create = async ({ quantity, userId, rawMaterialId }) => {
     quantity,
     userId: ObjectId(userId),
     createdDate,
-    rawMaterialId,
+    rawMaterialId: ObjectId(rawMaterialId),
   });
 
   const { name: user } = await Users.findUserById(userId);
@@ -27,4 +27,45 @@ exports.create = async ({ quantity, userId, rawMaterialId }) => {
   };
 
   return createdOrder;
+};
+
+exports.getRawMaterialRequestsByUsers = async (userName) => {
+  const usersId = await Users.getUsersIdByName(userName);
+
+  const db = await conn();
+  const ordersCollection = await db.collection(COLLECTION_NAME);
+  const foundOrders = await ordersCollection.aggregate([
+    { $match: { userId: { $in: usersId } } },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'userId',
+        foreignField: '_id',
+        as: 'user',
+      },
+    },
+    {
+      $lookup: {
+        from: 'rawMaterials',
+        localField: 'rawMaterialId',
+        foreignField: '_id',
+        as: 'rawMaterial',
+      },
+    },
+    {
+      $set: { user: '$user.name', name: '$rawMaterial.name' },
+    },
+    { $unwind: '$user' },
+    { $unwind: '$name' },
+    {
+      $project: {
+        rawMaterialId: 0,
+        userId: 0,
+        rawMaterial: 0,
+      },
+    },
+
+  ]).toArray();
+
+  return foundOrders;
 };

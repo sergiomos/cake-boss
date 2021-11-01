@@ -8,7 +8,6 @@ const API_ROUTE = '/rawMaterials';
 const conn = require('../../src/database/connection');
 const UserModel = require('../../src/models/Users.model');
 const getCurrentDate = require('../../src/utils/getCurrentDate');
-const { quantity } = require('../../src/validation/schemas/createRawMaterial');
 
 const createUser = async () => UserModel.create({
   name: 'fulano',
@@ -403,6 +402,11 @@ describe('GET /rawMaterials?user', () => {
 
     await createOrder(rawMaterial._id, user._id, 2);
   });
+
+  afterEach(async () => {
+    await cleanup();
+  });
+
   describe('List all raw materials request orders', () => {
     describe('on success', () => {
       it('return an array', async () => {
@@ -416,20 +420,20 @@ describe('GET /rawMaterials?user', () => {
         const response = await request(app)
           .get(`${API_ROUTE}?user=${user.name}`);
 
-        expect(response.body).toHaveProperty('_id');
-        expect(ObjectId.isValid(response.body._id)).toBe(true);
+        expect(response.body[0]).toHaveProperty('_id');
+        expect(ObjectId.isValid(response.body[0]._id)).toBe(true);
 
-        expect(response.body).toHaveProperty('name');
-        expect(response.body.name).toBe(rawMaterial.name);
+        expect(response.body[0]).toHaveProperty('name');
+        expect(response.body[0].name).toBe(rawMaterial.name);
 
-        expect(response.body).toHaveProperty('user');
-        expect(response.body.user).toBe(user.name);
+        expect(response.body[0]).toHaveProperty('user');
+        expect(response.body[0].user).toBe(user.name);
 
-        expect(response.body).toHaveProperty('quantity');
-        expect(response.body.quantity).toBe(2);
+        expect(response.body[0]).toHaveProperty('quantity');
+        expect(response.body[0].quantity).toBe(2);
 
-        expect(response.body).toHaveProperty('createdDate');
-        expect(response.body.name).toBe(getCurrentDate());
+        expect(response.body[0]).toHaveProperty('createdDate');
+        expect(response.body[0].createdDate).toBe(getCurrentDate());
       });
     });
   });

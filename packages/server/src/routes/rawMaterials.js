@@ -10,8 +10,8 @@ const Orders = require('../controllers/Orders.controller');
 
 routes.route('/')
   .get(
-    RawMaterialsMiddle.getByNameValidation,
-    RawMaterials.getMaterialsByName,
+    RawMaterialsMiddle.queryParametersHandle,
+    RawMaterials.getMaterialsController,
   )
   .post(
     RawMaterialsMiddle.createValidation,
