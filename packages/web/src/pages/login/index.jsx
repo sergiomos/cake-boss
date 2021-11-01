@@ -50,13 +50,13 @@ const Login = () => {
         <LoginForm
           handleUserLogin={handleUserLogin}
         />
-      </Box>
 
-      <RegisterMessage>
-        Ainda não é cadastrado?
-        {' '}
-        <RegisterMessageLink href="/singUp">Cadastre-se aqui</RegisterMessageLink>
-      </RegisterMessage>
+        <RegisterMessage>
+          Ainda não é cadastrado?
+          {' '}
+          <RegisterMessageLink href="/singUp">Cadastre-se aqui</RegisterMessageLink>
+        </RegisterMessage>
+      </Box>
     </Container>
   );
 };

@@ -5,7 +5,7 @@ export const Container = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  align-self: center;
+  align-items: center;
 `;
 
 export const Box = styled.div`
@@ -36,6 +36,8 @@ export const StatusMessage = styled.strong`
 
 export const RegisterMessage = styled.p`
   font-size: 1.4rem;
+  text-align: center;
+  margin-top: 2.4rem;
 `;
 
 export const RegisterMessageLink = styled.a`
