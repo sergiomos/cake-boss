@@ -5,7 +5,6 @@ import LoginForm from '../../components/LoginForm';
 
 import {
   Container,
-  Box,
   StatusMessage,
   RegisterMessage,
   RegisterMessageLink,
@@ -41,22 +40,20 @@ const Login = () => {
 
   return (
     <Container>
-      <Box>
-        <StatusMessage
-          loginStatus={loginStatus}
-        >
-          {loginStatusMessage}
-        </StatusMessage>
-        <LoginForm
-          handleUserLogin={handleUserLogin}
-        />
+      <StatusMessage
+        loginStatus={loginStatus}
+      >
+        {loginStatusMessage}
+      </StatusMessage>
+      <LoginForm
+        handleUserLogin={handleUserLogin}
+      />
 
-        <RegisterMessage>
-          Ainda não é cadastrado?
-          {' '}
-          <RegisterMessageLink href="/singUp">Cadastre-se aqui</RegisterMessageLink>
-        </RegisterMessage>
-      </Box>
+      <RegisterMessage>
+        Ainda não é cadastrado?
+        {' '}
+        <RegisterMessageLink href="/singUp">Cadastre-se aqui</RegisterMessageLink>
+      </RegisterMessage>
     </Container>
   );
 };
