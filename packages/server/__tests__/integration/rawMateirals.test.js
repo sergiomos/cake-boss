@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const request = require('supertest');
 
 const app = require('../../src/app');
@@ -6,6 +7,8 @@ const API_ROUTE = '/rawMaterials';
 
 const conn = require('../../src/database/connection');
 const UserModel = require('../../src/models/Users.model');
+const getCurrentDate = require('../../src/utils/getCurrentDate');
+const { quantity } = require('../../src/validation/schemas/createRawMaterial');
 
 const createUser = async () => UserModel.create({
   name: 'fulano',
@@ -27,6 +30,17 @@ const insertRawMaterials = async (rawMaterial, userId) => {
     .send({
       ...rawMaterial,
       userId,
+    });
+
+  return response.body;
+};
+
+const createOrder = async (rawMaterialId, userId, quantity) => {
+  const response = await request(app)
+    .put(`${API_ROUTE}/${rawMaterialId}/request`)
+    .send({
+      userId,
+      quantity,
     });
 
   return response.body;
@@ -374,6 +388,48 @@ describe('PUT /rawMaterials/:id/request', () => {
             });
           });
         });
+      });
+    });
+  });
+});
+
+describe('GET /rawMaterials?user', () => {
+  let user;
+  let rawMaterial;
+
+  beforeEach(async () => {
+    user = await createUser();
+    rawMaterial = await insertRawMaterials({ name: 'Farinha de trigo', quantity: 6 }, user._id);
+
+    await createOrder(rawMaterial._id, user._id, 2);
+  });
+  describe('List all raw materials request orders', () => {
+    describe('on success', () => {
+      it('return an array', async () => {
+        const response = await request(app)
+          .get(`${API_ROUTE}?user=${user.name}`);
+
+        expect(Array.isArray(response.body)).toBe(true);
+      });
+
+      it('the list match', async () => {
+        const response = await request(app)
+          .get(`${API_ROUTE}?user=${user.name}`);
+
+        expect(response.body).toHaveProperty('_id');
+        expect(ObjectId.isValid(response.body._id)).toBe(true);
+
+        expect(response.body).toHaveProperty('name');
+        expect(response.body.name).toBe(rawMaterial.name);
+
+        expect(response.body).toHaveProperty('user');
+        expect(response.body.user).toBe(user.name);
+
+        expect(response.body).toHaveProperty('quantity');
+        expect(response.body.quantity).toBe(2);
+
+        expect(response.body).toHaveProperty('createdDate');
+        expect(response.body.name).toBe(getCurrentDate());
       });
     });
   });
