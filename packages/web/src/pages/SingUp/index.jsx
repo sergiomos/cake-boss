@@ -35,7 +35,7 @@ const SingUp = () => {
   }, [singInUpRequestStatus]);
 
   useEffect(() => {
-    const time = 3000;
+    const time = 1500;
     setTimeout(() => {
       setSingUpStatusMessage('');
     }, time);

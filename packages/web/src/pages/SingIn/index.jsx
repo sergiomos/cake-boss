@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { Redirect } from 'react-router-dom';
 import useUserContext from '../../hooks/useUserContext';
 import LoginForm from '../../components/LoginForm';
 import H1 from '../../components/Titles/H1';
@@ -12,7 +13,9 @@ import {
 } from './style';
 
 const Login = () => {
-  const { singIn, singInUpRequestStatus, setSingInUpRequestStatus } = useUserContext();
+  const {
+    singIn, singInUpRequestStatus, setSingInUpRequestStatus, user,
+  } = useUserContext();
   const [loginStatusMessage, setLoginStatusMessage] = useState('');
 
   const handleUserLogin = async (userEmail, userPassword) => {
@@ -38,6 +41,8 @@ const Login = () => {
       setLoginStatusMessage('');
     }, time);
   }, [loginStatusMessage]);
+
+  if (user.role) return (<Redirect to={`/${user.role}`} />);
 
   return (
     <Container>

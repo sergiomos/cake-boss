@@ -9,6 +9,7 @@ const SubmitButton = styled.button`
   background-color: ${(props) => props.bgColor} ;
 
   color: #fafafa;
+  font-size: 1.6rem;
   font-weight: 700;
   
   padding: 0 0.8rem;
@@ -16,6 +17,10 @@ const SubmitButton = styled.button`
 
   :disabled {
     background-color: silver;
+  }
+
+  @media(min-width: 350px) {
+    width: 350px;
   }
 `;
 

@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
   const [password, setPassword] = useState('');
   const [singInUpRequestStatus, setSingInUpRequestStatus] = useState('');
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
 
   const singIn = async (userEmail, userPassword) => {
     try {
