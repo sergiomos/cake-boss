@@ -118,6 +118,7 @@ yarn test
 ## 🌐Tecnologias
 
 - [Javascript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+- [Github actions](https://docs.github.com/en/actions)
 - [Syled Componets](https://styled-components.com/docs)
 - [React](https://pt-br.reactjs.org/docs/getting-started.html)
 - [NodeJs](https://nodejs.org/en/)
