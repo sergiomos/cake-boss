@@ -8,22 +8,6 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const StatusMessage = styled.strong`
-  width: 100%;
-
-  padding: 0.8rem 0;
-
-  margin-bottom: 1.6rem;
-  opacity: 80%;
-
-  font-size: 1.4rem;
-  font-weight: 400;
-
-  text-align: center;
-  display: ${({ loginStatus }) => (loginStatus === 'loading' || !loginStatus ? 'none' : 'block')};
-
-`;
-
 export const RegisterMessage = styled.p`
   font-size: 1.4rem;
   text-align: center;

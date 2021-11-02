@@ -5,22 +5,22 @@ import LoginForm from '../../components/LoginForm';
 
 import {
   Container,
-  StatusMessage,
   RegisterMessage,
   RegisterMessageLink,
 } from './style';
+import StatusMessage from '../../components/StatusMessage';
 
 const Login = () => {
-  const { singIn, loginStatus, setLoginStatus } = useUserContext();
+  const { singIn, singInUpRequestStatus, setSingInUpRequestStatus } = useUserContext();
   const [loginStatusMessage, setLoginStatusMessage] = useState('');
 
   const handleUserLogin = async (userEmail, userPassword) => {
-    setLoginStatus('loading');
+    setSingInUpRequestStatus('loading');
     await singIn(userEmail, userPassword);
   };
 
   useEffect(() => {
-    switch (loginStatus) {
+    switch (singInUpRequestStatus) {
       case 401:
         setLoginStatusMessage('Email ou senha inválidos, verifique as informações e tente novamente');
         break;
@@ -29,7 +29,7 @@ const Login = () => {
         break;
       default:
     }
-  }, [loginStatus]);
+  }, [singInUpRequestStatus]);
 
   useEffect(() => {
     const time = 5000;
@@ -41,7 +41,7 @@ const Login = () => {
   return (
     <Container>
       <StatusMessage
-        loginStatus={loginStatus}
+        status={singInUpRequestStatus}
       >
         {loginStatusMessage}
       </StatusMessage>

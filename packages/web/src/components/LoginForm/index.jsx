@@ -13,7 +13,7 @@ const LoginForm = ({ handleUserLogin }) => {
     password,
     setEmail,
     setPassword,
-    loginStatus,
+    singInUpRequestStatus,
   } = useUserContext();
 
   const handleInputChange = ({ target }, callback) => {
@@ -45,9 +45,9 @@ const LoginForm = ({ handleUserLogin }) => {
         <SubmitButton
           type="submit"
           bgColor="#1BA29D"
-          disabled={loginStatus === 'loading'}
+          disabled={singInUpRequestStatus === 'loading'}
         >
-          {loginStatus === 'loading' ? 'Carregando' : 'Entrar'}
+          {singInUpRequestStatus === 'loading' ? 'Carregando' : 'Entrar'}
         </SubmitButton>
 
       </Form>
