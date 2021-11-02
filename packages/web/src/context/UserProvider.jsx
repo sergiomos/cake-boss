@@ -9,12 +9,9 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3333
 const UserProvider = ({ children }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loginStatus, setLoginStatus] = useState('');
+  const [singInUpRequestStatus, setSingInUpRequestStatus] = useState('');
 
-  const [user, setUser] = useState({
-    _id: '',
-    role: '',
-  });
+  const [user, setUser] = useState();
 
   const singIn = async (userEmail, userPassword) => {
     try {
@@ -26,11 +23,30 @@ const UserProvider = ({ children }) => {
       const { status, data } = await axios
         .post('/login', requestBody);
 
-      setLoginStatus(status);
+      setSingInUpRequestStatus(status);
       setUser(data);
     } catch (error) {
       const { response } = error;
-      setLoginStatus(response.status);
+      setSingInUpRequestStatus(response.status);
+    }
+  };
+
+  const singUp = async (newUser) => {
+    try {
+      const requestBody = {
+        name: newUser.name,
+        email: newUser.email,
+        password: newUser.password,
+      };
+
+      const { data: { _id, role }, status } = await axios
+        .post('/manager', requestBody);
+
+      setUser({ _id, role });
+      setSingInUpRequestStatus(status);
+    } catch (error) {
+      const { response } = error;
+      setSingInUpRequestStatus(response.status);
     }
   };
 
@@ -38,12 +54,13 @@ const UserProvider = ({ children }) => {
     user,
     email,
     password,
-    loginStatus,
+    singInUpRequestStatus,
     singIn,
+    singUp,
     setUser,
     setEmail,
     setPassword,
-    setLoginStatus,
+    setSingInUpRequestStatus,
   };
 
   return (

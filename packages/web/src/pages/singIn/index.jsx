@@ -2,26 +2,26 @@ import React, { useEffect, useState } from 'react';
 
 import useUserContext from '../../hooks/useUserContext';
 import LoginForm from '../../components/LoginForm';
+import H1 from '../../components/Titles/H1';
+import StatusMessage from '../../components/StatusMessage';
 
 import {
   Container,
-  Box,
-  StatusMessage,
   RegisterMessage,
   RegisterMessageLink,
 } from './style';
 
 const Login = () => {
-  const { singIn, loginStatus, setLoginStatus } = useUserContext();
+  const { singIn, singInUpRequestStatus, setSingInUpRequestStatus } = useUserContext();
   const [loginStatusMessage, setLoginStatusMessage] = useState('');
 
   const handleUserLogin = async (userEmail, userPassword) => {
-    setLoginStatus('loading');
+    setSingInUpRequestStatus('loading');
     await singIn(userEmail, userPassword);
   };
 
   useEffect(() => {
-    switch (loginStatus) {
+    switch (singInUpRequestStatus) {
       case 401:
         setLoginStatusMessage('Email ou senha inválidos, verifique as informações e tente novamente');
         break;
@@ -30,7 +30,7 @@ const Login = () => {
         break;
       default:
     }
-  }, [loginStatus]);
+  }, [singInUpRequestStatus]);
 
   useEffect(() => {
     const time = 5000;
@@ -41,22 +41,21 @@ const Login = () => {
 
   return (
     <Container>
-      <Box>
-        <StatusMessage
-          loginStatus={loginStatus}
-        >
-          {loginStatusMessage}
-        </StatusMessage>
-        <LoginForm
-          handleUserLogin={handleUserLogin}
-        />
+      <H1>Login</H1>
+      <StatusMessage
+        status={singInUpRequestStatus}
+      >
+        {loginStatusMessage}
+      </StatusMessage>
+      <LoginForm
+        handleUserLogin={handleUserLogin}
+      />
 
-        <RegisterMessage>
-          Ainda não é cadastrado?
-          {' '}
-          <RegisterMessageLink href="/singUp">Cadastre-se aqui</RegisterMessageLink>
-        </RegisterMessage>
-      </Box>
+      <RegisterMessage>
+        Ainda não é cadastrado?
+        {' '}
+        <RegisterMessageLink href="/singUp">Cadastre-se aqui</RegisterMessageLink>
+      </RegisterMessage>
     </Container>
   );
 };

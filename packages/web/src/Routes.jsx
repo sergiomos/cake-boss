@@ -1,11 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Login from './pages/login';
+import singIn from './pages/singIn';
+import singUp from './pages/singUp';
 
 const Routes = () => (
   <Switch>
-    <Route path="/" component={Login} />
+    <Route exact path="/" component={singIn} />
+    <Route path="/singUp" component={singUp} />
   </Switch>
 );
 
