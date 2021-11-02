@@ -11,10 +11,7 @@ const UserProvider = ({ children }) => {
   const [password, setPassword] = useState('');
   const [loginStatus, setLoginStatus] = useState('');
 
-  const [user, setUser] = useState({
-    _id: '',
-    role: '',
-  });
+  const [user, setUser] = useState();
 
   const singIn = async (userEmail, userPassword) => {
     try {
@@ -34,12 +31,31 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const singUp = async (newUser) => {
+    try {
+      const requestBody = {
+        name: newUser.name,
+        email: newUser.email,
+        password: newUser.password,
+      };
+
+      const { data: { _id, role } } = await axios
+        .post('/manager', requestBody);
+
+      setUser({ _id, role });
+    } catch (error) {
+      const { response } = error;
+      console.log(response);
+    }
+  };
+
   const store = {
     user,
     email,
     password,
     loginStatus,
     singIn,
+    singUp,
     setUser,
     setEmail,
     setPassword,

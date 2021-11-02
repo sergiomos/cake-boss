@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-// import { func } from 'prop-types';
+import { func } from 'prop-types';
 
 import TextInput from '../TextInput';
 import SubmitButton from '../SubmitButton';
 
 import { Container, Form } from './style';
 
-const LoginForm = () => {
+const singUpForm = ({ handleUserSingUp }) => {
   const [newUser, setNewUser] = useState({});
 
   const handleInputChange = ({ target }) => {
@@ -17,17 +17,18 @@ const LoginForm = () => {
       [name]: value,
     });
   };
+
   return (
     <Container>
       <Form onSubmit={(e) => {
-        e.preventDefault();
+        handleUserSingUp(e, newUser);
       }}
       >
         <TextInput
           type="text"
           placeholder="Seu nome"
           required
-          name="nome"
+          name="name"
           onChange={handleInputChange}
           minLength={3}
         />
@@ -60,8 +61,8 @@ const LoginForm = () => {
   );
 };
 
-// LoginForm.propTypes = {
-//   handleUserLogin: func,
-// }.isRequired;
+singUpForm.propTypes = {
+  handleUserSingUp: func,
+}.isRequired;
 
-export default LoginForm;
+export default singUpForm;
