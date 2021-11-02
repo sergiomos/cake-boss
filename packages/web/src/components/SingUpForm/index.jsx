@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { func } from 'prop-types';
 
+import useUserContext from '../../hooks/useUserContext';
+
 import TextInput from '../TextInput';
 import SubmitButton from '../SubmitButton';
 
 import { Container, Form } from './style';
 
 const singUpForm = ({ handleUserSingUp }) => {
+  const { singInUpRequestStatus } = useUserContext();
   const [newUser, setNewUser] = useState({});
 
   const handleInputChange = ({ target }) => {
@@ -51,9 +54,9 @@ const singUpForm = ({ handleUserSingUp }) => {
         <SubmitButton
           type="submit"
           bgColor="#1BA29D"
+          disable={singInUpRequestStatus === 'loading'}
         >
-          Registrar
-          {/* {loginStatus === 'loading' ? 'Carregando' : 'Entrar'} */}
+          {singInUpRequestStatus === 'loading' ? 'Carregando' : 'Cadastrar'}
         </SubmitButton>
 
       </Form>

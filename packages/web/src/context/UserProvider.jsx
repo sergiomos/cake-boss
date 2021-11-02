@@ -39,13 +39,14 @@ const UserProvider = ({ children }) => {
         password: newUser.password,
       };
 
-      const { data: { _id, role } } = await axios
+      const { data: { _id, role }, status } = await axios
         .post('/manager', requestBody);
 
       setUser({ _id, role });
+      setSingInUpRequestStatus(status);
     } catch (error) {
       const { response } = error;
-      console.log(response.status);
+      setSingInUpRequestStatus(response.status);
     }
   };
 

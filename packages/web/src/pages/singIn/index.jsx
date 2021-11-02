@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import useUserContext from '../../hooks/useUserContext';
 import LoginForm from '../../components/LoginForm';
+import H1 from '../../components/Titles/H1';
+import StatusMessage from '../../components/StatusMessage';
 
 import {
   Container,
   RegisterMessage,
   RegisterMessageLink,
 } from './style';
-import StatusMessage from '../../components/StatusMessage';
 
 const Login = () => {
   const { singIn, singInUpRequestStatus, setSingInUpRequestStatus } = useUserContext();
@@ -40,6 +41,7 @@ const Login = () => {
 
   return (
     <Container>
+      <H1>Login</H1>
       <StatusMessage
         status={singInUpRequestStatus}
       >
