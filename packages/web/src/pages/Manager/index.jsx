@@ -6,6 +6,7 @@ import getEmployeeOrders from '../../services/getEmployeeOrders';
 
 import EmployeesOrders from '../../components/EmployeesOrders';
 import CreateEmployeeForm from '../../components/CreateEmployeeForm';
+import Header from '../../components/Header';
 
 import {
   Container,
@@ -20,7 +21,7 @@ const ManagerHome = () => {
   const { user } = useUserContext();
   const [employeeName, setEmployeeName] = useState('');
   const [employeeOrders, setEmployeeOrders] = useState([]);
-  const [displayCreateEmployeeModal, setDisplayCreateEmployeeModal] = useState(true);
+  const [displayCreateEmployeeModal, setDisplayCreateEmployeeModal] = useState(false);
 
   const handleSearch = async () => {
     const orders = await getEmployeeOrders();
@@ -30,6 +31,7 @@ const ManagerHome = () => {
   if (user.role !== 'manager') return (<Redirect to="/" />);
   return (
     <Container>
+      <Header />
       <ResponsiveBox>
         <FlexBox>
           <SearchBar

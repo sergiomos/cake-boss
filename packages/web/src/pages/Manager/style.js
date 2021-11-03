@@ -4,7 +4,6 @@ import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
 
 export const Container = styled.div`
-  padding-top: 1.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,7 +13,7 @@ export const Container = styled.div`
 export const FlexBox = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 1.6rem;
+  margin: 1.6rem 0;
   justify-content: center;
 
   @media(min-width: 730px) {
