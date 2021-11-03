@@ -27,3 +27,7 @@ export const SearchBtn = styled(Button)`
   width: auto;
   padding: 0 1.6rem;
 `;
+
+export const CreateEmployeeBtn = styled(Button)`
+  margin-bottom: 2.4rem;
+`;

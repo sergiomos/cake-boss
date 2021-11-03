@@ -6,18 +6,17 @@ import getEmployeeOrders from '../../services/getEmployeeOrders';
 
 import EmployeesOrders from '../../components/EmployeesOrders';
 import {
-  Container, SearchBtn, SearchBar, FlexBox,
+  Container,
+  SearchBtn,
+  SearchBar,
+  FlexBox,
+  CreateEmployeeBtn,
 } from './style';
 
 const ManagerHome = () => {
   const { user } = useUserContext();
   const [employeeName, setEmployeeName] = useState('');
-  const [employeeOrders, setEmployeeOrders] = useState([{
-    user: 'fulano',
-    name: 'Farinha',
-    quantity: 5,
-    createdDate: '2021-10-01',
-  }]);
+  const [employeeOrders, setEmployeeOrders] = useState([]);
 
   const handleSearch = async () => {
     const orders = await getEmployeeOrders();
@@ -43,6 +42,13 @@ const ManagerHome = () => {
           Pesquisar
         </SearchBtn>
       </FlexBox>
+
+      <CreateEmployeeBtn
+        type="button"
+        bgColor="#2660A4"
+      >
+        Cadastrar funcionário
+      </CreateEmployeeBtn>
 
       {!!employeeOrders.length && (
       <EmployeesOrders
