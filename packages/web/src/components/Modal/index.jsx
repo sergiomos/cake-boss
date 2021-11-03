@@ -1,11 +1,18 @@
-import { element } from 'prop-types';
 import React from 'react';
+import { element, func } from 'prop-types';
 
-import { Container, ModalContainer } from './style';
+import { Container, ModalContainer, CloseBtn } from './style';
 
-const Modal = ({ children }) => (
+const Modal = ({ children, close }) => (
   <Container>
     <ModalContainer>
+      <CloseBtn
+        type="button"
+        onClick={close}
+      >
+        X
+
+      </CloseBtn>
       {children}
     </ModalContainer>
   </Container>
@@ -13,6 +20,7 @@ const Modal = ({ children }) => (
 
 Modal.propTypes = {
   children: element,
+  close: func,
 }.isRequired;
 
 export default Modal;

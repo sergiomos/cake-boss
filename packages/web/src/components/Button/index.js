@@ -6,7 +6,7 @@ const Button = styled.button`
 
   border-radius: 0.5rem;
   border: none;
-  background-color: ${(props) => props.bgColor} ;
+  background-color: ${(props) => props.bgColor || '#1BA29D'} ;
 
   color: #fafafa;
   font-size: 1.6rem;

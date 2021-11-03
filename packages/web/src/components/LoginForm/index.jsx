@@ -44,7 +44,6 @@ const LoginForm = ({ handleUserLogin }) => {
 
         <SubmitButton
           type="submit"
-          bgColor="#1BA29D"
           disabled={singInUpRequestStatus === 'loading'}
         >
           {singInUpRequestStatus === 'loading' ? 'Carregando' : 'Entrar'}

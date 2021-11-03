@@ -17,8 +17,21 @@ export const Container = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  background-color: #fafafa;
   width: 100%;
-  padding: 1.6rem;
+  max-width: 35rem;
+  background-color: #fafafa;
+  padding: 4rem 2rem;
   color: #252525;
+  position: relative;
+  border-radius: 0.8rem;
+`;
+
+export const CloseBtn = styled.button`
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  font-size: 1.8rem;
+  cursor: pointer;
 `;

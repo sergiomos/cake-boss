@@ -5,7 +5,7 @@ import useUserContext from '../../hooks/useUserContext';
 import getEmployeeOrders from '../../services/getEmployeeOrders';
 
 import EmployeesOrders from '../../components/EmployeesOrders';
-import CreateEmployeeModal from '../../components/CreateEmployeeModal';
+import CreateEmployeeForm from '../../components/CreateEmployeeForm';
 
 import {
   Container,
@@ -13,6 +13,7 @@ import {
   SearchBar,
   FlexBox,
   CreateEmployeeBtn,
+  ResponsiveBox,
 } from './style';
 
 const ManagerHome = () => {
@@ -29,30 +30,31 @@ const ManagerHome = () => {
   if (user.role !== 'manager') return (<Redirect to="/" />);
   return (
     <Container>
-      <FlexBox>
-        <SearchBar
-          type="text"
-          placeholder="Digite o nome de um colaborador"
-          value={employeeName}
-          onChange={({ target }) => setEmployeeName(target.value)}
-        />
+      <ResponsiveBox>
+        <FlexBox>
+          <SearchBar
+            type="text"
+            placeholder="Digite o nome de um colaborador"
+            value={employeeName}
+            onChange={({ target }) => setEmployeeName(target.value)}
+          />
 
-        <SearchBtn
+          <SearchBtn
+            type="button"
+            bgColor="#33CA7F"
+            onClick={handleSearch}
+          >
+            Pesquisar
+          </SearchBtn>
+        </FlexBox>
+        <CreateEmployeeBtn
           type="button"
-          bgColor="#33CA7F"
-          onClick={handleSearch}
+          bgColor="#2660A4"
+          onClick={() => setDisplayCreateEmployeeModal(true)}
         >
-          Pesquisar
-        </SearchBtn>
-      </FlexBox>
-
-      <CreateEmployeeBtn
-        type="button"
-        bgColor="#2660A4"
-        onClick={() => setDisplayCreateEmployeeModal(true)}
-      >
-        Cadastrar funcionário
-      </CreateEmployeeBtn>
+          Cadastrar funcionário
+        </CreateEmployeeBtn>
+      </ResponsiveBox>
 
       {!!employeeOrders.length && (
       <EmployeesOrders
@@ -60,7 +62,11 @@ const ManagerHome = () => {
       />
       )}
 
-      {displayCreateEmployeeModal && <CreateEmployeeModal />}
+      {displayCreateEmployeeModal && (
+      <CreateEmployeeForm
+        close={() => setDisplayCreateEmployeeModal(false)}
+      />
+      )}
     </Container>
   );
 };
