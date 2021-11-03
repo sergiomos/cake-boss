@@ -5,6 +5,8 @@ import useUserContext from '../../hooks/useUserContext';
 import getEmployeeOrders from '../../services/getEmployeeOrders';
 
 import EmployeesOrders from '../../components/EmployeesOrders';
+import CreateEmployeeModal from '../../components/CreateEmployeeModal';
+
 import {
   Container,
   SearchBtn,
@@ -17,6 +19,7 @@ const ManagerHome = () => {
   const { user } = useUserContext();
   const [employeeName, setEmployeeName] = useState('');
   const [employeeOrders, setEmployeeOrders] = useState([]);
+  const [displayCreateEmployeeModal, setDisplayCreateEmployeeModal] = useState(true);
 
   const handleSearch = async () => {
     const orders = await getEmployeeOrders();
@@ -46,6 +49,7 @@ const ManagerHome = () => {
       <CreateEmployeeBtn
         type="button"
         bgColor="#2660A4"
+        onClick={() => setDisplayCreateEmployeeModal(true)}
       >
         Cadastrar funcionário
       </CreateEmployeeBtn>
@@ -55,6 +59,8 @@ const ManagerHome = () => {
         orders={employeeOrders}
       />
       )}
+
+      {displayCreateEmployeeModal && <CreateEmployeeModal />}
     </Container>
   );
 };

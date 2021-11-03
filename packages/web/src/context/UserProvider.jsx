@@ -15,6 +15,8 @@ const UserProvider = ({ children }) => {
 
   const singIn = async (userEmail, userPassword) => {
     try {
+      setSingInUpRequestStatus('loading');
+
       const requestBody = {
         email: userEmail,
         password: userPassword,

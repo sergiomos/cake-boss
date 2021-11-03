@@ -14,12 +14,11 @@ import {
 
 const Login = () => {
   const {
-    singIn, singInUpRequestStatus, setSingInUpRequestStatus, user,
+    singIn, singInUpRequestStatus, user,
   } = useUserContext();
   const [loginStatusMessage, setLoginStatusMessage] = useState('');
 
   const handleUserLogin = async (userEmail, userPassword) => {
-    setSingInUpRequestStatus('loading');
     await singIn(userEmail, userPassword);
   };
 
@@ -33,14 +32,11 @@ const Login = () => {
         break;
       default:
     }
-  }, [singInUpRequestStatus]);
 
-  useEffect(() => {
-    const time = 5000;
     setTimeout(() => {
       setLoginStatusMessage('');
-    }, time);
-  }, [loginStatusMessage]);
+    }, 3000);
+  }, [singInUpRequestStatus]);
 
   if (user.role) return (<Redirect to={`/${user.role}`} />);
 

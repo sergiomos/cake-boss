@@ -32,13 +32,10 @@ const SingUp = () => {
         break;
       default:
     }
-  }, [singInUpRequestStatus]);
 
-  useEffect(() => {
-    const time = 1500;
     setTimeout(() => {
       setSingUpStatusMessage('');
-    }, time);
+    }, 1500);
   }, [singInUpRequestStatus]);
 
   if (shouldRedirectToHome) return <Redirect to="/manager" />;
