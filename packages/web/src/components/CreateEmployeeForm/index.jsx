@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { func } from 'prop-types';
 
+import useUserContext from '../../hooks/useUserContext';
+
 import Modal from '../Modal';
 
 import TextInput from '../TextInput';
@@ -8,8 +10,12 @@ import H2 from '../Titles/H2';
 
 import { Form, RolesSelect, RoleOption } from './style';
 import Button from '../Button';
+import createEmployee from '../../services/createEmployee';
 
 const CreateEmployeeForm = ({ close }) => {
+  const { user } = useUserContext();
+  const [createEmployeeStatus, setCreateEmployeeStatus] = useState('');
+
   const [newEmployee, setNewEmployee] = useState({
     name: '',
     email: '',
@@ -25,15 +31,35 @@ const CreateEmployeeForm = ({ close }) => {
     });
   };
 
-  const handleEmployeeInsert = (e) => {
+  const resetStatus = () => {
+    setTimeout(() => {
+      setCreateEmployeeStatus('');
+    }, 1500);
+  };
+
+  const clearNewEmployee = () => {
+    setNewEmployee({
+      name: '',
+      email: '',
+      password: '',
+      role: '',
+    });
+  };
+
+  const handleEmployeeInsert = async (e) => {
     e.preventDefault();
-    console.log(newEmployee);
+    const message = await createEmployee({ ...newEmployee, managerId: user._id });
+    setCreateEmployeeStatus(message);
+    resetStatus();
+    clearNewEmployee();
   };
 
   return (
     <Modal close={close}>
       <Form onSubmit={handleEmployeeInsert}>
         <H2>Cadastrar Funcionario</H2>
+
+        {createEmployeeStatus}
         <TextInput
           type="text"
           placeholder="Nome do funcionario"
@@ -56,7 +82,7 @@ const CreateEmployeeForm = ({ close }) => {
           value={newEmployee.role}
           onChange={handleInputsChange}
         >
-          <RoleOption selected disabled>Escolha uma função</RoleOption>
+          <RoleOption value="" disabled>Escolha uma função</RoleOption>
           <RoleOption value="baker">Padeiro</RoleOption>
           <RoleOption value="stockist">Estoquista</RoleOption>
         </RolesSelect>
