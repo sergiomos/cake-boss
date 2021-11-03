@@ -11,10 +11,12 @@ const UserProvider = ({ children }) => {
   const [password, setPassword] = useState('');
   const [singInUpRequestStatus, setSingInUpRequestStatus] = useState('');
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
 
   const singIn = async (userEmail, userPassword) => {
     try {
+      setSingInUpRequestStatus('loading');
+
       const requestBody = {
         email: userEmail,
         password: userPassword,

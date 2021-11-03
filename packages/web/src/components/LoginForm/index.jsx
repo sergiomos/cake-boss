@@ -3,7 +3,7 @@ import { func } from 'prop-types';
 import useUserContext from '../../hooks/useUserContext';
 
 import TextInput from '../TextInput';
-import SubmitButton from '../SubmitButton';
+import SubmitButton from '../Button';
 
 import { Container, Form } from './style';
 
@@ -44,7 +44,6 @@ const LoginForm = ({ handleUserLogin }) => {
 
         <SubmitButton
           type="submit"
-          bgColor="#1BA29D"
           disabled={singInUpRequestStatus === 'loading'}
         >
           {singInUpRequestStatus === 'loading' ? 'Carregando' : 'Entrar'}

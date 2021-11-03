@@ -4,7 +4,7 @@ import { func } from 'prop-types';
 import useUserContext from '../../hooks/useUserContext';
 
 import TextInput from '../TextInput';
-import SubmitButton from '../SubmitButton';
+import SubmitButton from '../Button';
 
 import { Container, Form } from './style';
 

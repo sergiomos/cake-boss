@@ -9,6 +9,10 @@ const TextInput = styled.input`
   background-color: silver;
   
   padding: 0 0.8rem;
+
+  @media(min-width: 350px) {
+    max-width: 350px;
+  }
 `;
 
 export default TextInput;
