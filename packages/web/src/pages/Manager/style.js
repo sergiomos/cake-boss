@@ -8,15 +8,13 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @media(min-width: 500) {
-    display: block
-  }
+  flex-direction: column;
 `;
 
 export const FlexBox = styled.div`
   width: 100%;
-  display: flex
+  display: flex;
+  margin-bottom: 1.6rem;
 `;
 
 export const SearchBar = styled(TextInput)`
