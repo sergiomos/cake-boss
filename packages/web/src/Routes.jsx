@@ -5,6 +5,7 @@ import SingIn from './pages/SingIn';
 import SingUp from './pages/SingUp';
 import ManagerHome from './pages/Manager';
 import StockistPage from './pages/Stockist';
+import BakerPage from './pages/Baker';
 
 const Routes = () => (
   <Switch>
@@ -12,6 +13,7 @@ const Routes = () => (
     <Route path="/singUp" component={SingUp} />
     <Route path="/manager" component={ManagerHome} />
     <Route path="/stockist" component={StockistPage} />
+    <Route path="/baker" component={BakerPage} />
   </Switch>
 );
 
