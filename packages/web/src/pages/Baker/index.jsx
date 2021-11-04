@@ -40,8 +40,6 @@ const BakerPage = () => {
       userId,
     });
 
-    console.log(userId);
-
     setResponseMessage(message);
     cleanResponseMessage();
   };
