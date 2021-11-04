@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Header from '../../components/Header';
+import ListRawMaterials from '../../components/ListRawMaterials';
 import searchForRawMaterial from '../../services/searchForRawMaterial';
 
 import {
@@ -35,7 +36,7 @@ const BakerPage = () => {
         </SearchBtn>
       </FlexBox>
 
-      {!!rawMaterials.length && 'carregou'}
+      {!!rawMaterials.length && (<ListRawMaterials rawMaterials={rawMaterials} />)}
     </Container>
   );
 };
