@@ -3,9 +3,9 @@ import axios from 'axios';
 const searchForRawMaterial = async (rawMaterialName) => {
   try {
     const { data: foundRawMaterials } = await axios.get(`/rawMaterials?name=${rawMaterialName}`);
-    return foundRawMaterials;
+    return { foundRawMaterials };
   } catch (error) {
-    return [];
+    return { message: 'Produto não encontrado' };
   }
 };
 
