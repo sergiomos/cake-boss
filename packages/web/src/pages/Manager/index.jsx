@@ -24,7 +24,7 @@ const ManagerHome = () => {
   const [displayCreateEmployeeModal, setDisplayCreateEmployeeModal] = useState(false);
 
   const handleSearch = async () => {
-    const orders = await getEmployeeOrders();
+    const orders = await getEmployeeOrders(employeeName);
     setEmployeeOrders(orders);
   };
 
