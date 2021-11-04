@@ -12,7 +12,7 @@ exports.create = async ({ quantity, userId, rawMaterialId }) => {
   const createdDate = getCurrentDate();
 
   const { insertedId } = await ordersCollection.insertOne({
-    quantity,
+    quantity: Number(quantity),
     userId: ObjectId(userId),
     createdDate,
     rawMaterialId: ObjectId(rawMaterialId),

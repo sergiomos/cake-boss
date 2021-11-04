@@ -3,11 +3,11 @@ const conn = require('../database/connection');
 
 const COLLECTION_NAME = 'rawMaterials';
 
-exports.create = async ({ userId, ...rawMaterialData }) => {
+exports.create = async ({ userId, quantity, ...rawMaterialData }) => {
   const db = await conn();
   const rawMaterialCollection = await db.collection(COLLECTION_NAME);
   const { insertedId } = await rawMaterialCollection
-    .insertOne({ ...rawMaterialData, userId: ObjectId(userId) });
+    .insertOne({ ...rawMaterialData, quantity: Number(quantity), userId: ObjectId(userId) });
 
   return { ...rawMaterialData, _id: insertedId, userId };
 };

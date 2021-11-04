@@ -38,6 +38,25 @@
 - Utilizar matérias primas
 - Listar as saidas de cada materia prima do estoque
 
+**Passo a Passo**
+
+(Gerente)
+1. Faça o cadastro
+2. Adicione um padeiro e estoquista
+
+(Estoquista)
+
+3. Entre no perfil do estoquista e cadastre materias primas
+
+(Padeiro)
+
+4. Entre no perfil do padeiro e procure pela materia prima desejada
+5. cadastre os pedidos de materia prima
+
+(Gerente)
+
+6. Digite o nome de um funcionario e procure seus pedidos
+
 ## 📕Desenvolvimento
 
 **Você deve ter instalado**
