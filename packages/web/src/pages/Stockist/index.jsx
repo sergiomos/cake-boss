@@ -6,7 +6,7 @@ import Header from '../../components/Header';
 import { Container, AddMaterialBtn } from './style';
 
 const StockistPage = () => {
-  const [displayAddMaterialForm, setDisplayAddMaterialForm] = useState(true);
+  const [displayAddMaterialForm, setDisplayAddMaterialForm] = useState(false);
 
   return (
     <Container>
