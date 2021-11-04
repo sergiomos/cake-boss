@@ -3,12 +3,15 @@ import { arrayOf, object } from 'prop-types';
 
 import { Table, Th, Td } from '../Table';
 
+import { RequestButton, RequestTextInput } from './style';
+
 const ListRawMaterials = ({ rawMaterials }) => (
   <Table>
     <thead>
       <tr>
         <Th>Nome</Th>
         <Th>Em estoque</Th>
+        <Th>Fazer pedido</Th>
       </tr>
     </thead>
 
@@ -17,6 +20,10 @@ const ListRawMaterials = ({ rawMaterials }) => (
         <tr>
           <Td>{rawMaterial.name}</Td>
           <Td>{rawMaterial.quantity}</Td>
+          <Td>
+            <RequestTextInput type="number" placeholder="Qt." />
+            <RequestButton type="Button">Retirar</RequestButton>
+          </Td>
         </tr>
       ))}
     </tbody>
