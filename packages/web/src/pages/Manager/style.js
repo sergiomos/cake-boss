@@ -15,8 +15,9 @@ export const FlexBox = styled.div`
   display: flex;
   margin: 1.6rem 0;
   justify-content: center;
-
+  
   @media(min-width: 730px) {
+    justify-content: left;
     width: 50vw;
   }
 `;
@@ -37,6 +38,7 @@ export const CreateEmployeeBtn = styled(Button)`
 
   @media(min-width: 730px) {
     width: auto;
+    margin: 0;
     padding: 0 1.6rem;
   }
 `;
@@ -45,8 +47,8 @@ export const ResponsiveBox = styled(FlexBox)`
    width: 100%;
    justify-content: space-between;
 
-   @media(max-width: 730px) {
    align-items: center;
+   @media(max-width: 730px) {
    flex-direction: column ;
   }
 `;
