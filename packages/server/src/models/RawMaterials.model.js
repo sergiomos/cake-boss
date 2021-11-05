@@ -9,7 +9,9 @@ exports.create = async ({ userId, quantity, ...rawMaterialData }) => {
   const { insertedId } = await rawMaterialCollection
     .insertOne({ ...rawMaterialData, quantity: Number(quantity), userId: ObjectId(userId) });
 
-  return { ...rawMaterialData, _id: insertedId, userId };
+  return {
+    ...rawMaterialData, _id: insertedId, userId, quantity,
+  };
 };
 
 exports.getMaterialsByName = async (rawMaterialName) => {

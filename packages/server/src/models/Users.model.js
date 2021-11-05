@@ -28,7 +28,7 @@ exports.findByEmail = async (userEmail) => {
 const findUsersByName = async (userName) => {
   const db = await conn();
   const userCollection = await db.collection(COLLECTION_NAME);
-  const foundUsers = await userCollection.find({ name: userName }).toArray();
+  const foundUsers = await userCollection.find({ name: { $regex: userName, $options: 'ig' } }).toArray();
 
   return foundUsers;
 };
